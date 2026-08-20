@@ -2,28 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\CustomField;
 
-class RecordCategory extends Model
+class CustomField extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
+        'record_category_id',
         'name',
-        'description',
+        'field_type',
+        'is_required',
         'is_active',
+        'sort_order',
     ];
 
     protected $casts = [
+        'is_required' => 'boolean',
         'is_active' => 'boolean',
     ];
 
-    public function customFields()
+    public function recordCategory()
     {
-        return $this->hasMany(CustomField::class)
-            ->orderBy('sort_order');
+        return $this->belongsTo(RecordCategory::class);
     }
 }
